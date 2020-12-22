@@ -2,19 +2,19 @@
     <div class="header">
     	<!-- 网站标志 -->
         <div class="logo fl">
-          黑马程序员 <i>ITHEIMA</i>
+          <i>个人博客</i>
         </div>
         <!-- /网站标志 -->
         <!-- 用户信息 -->
         <div class="info">
             <div class="profile dropdown fr">
                 <span class="btn dropdown-toggle" data-toggle="dropdown">
-					admin
+					{{userInfo && userInfo.username}}
 					<span class="caret"></span>
                 </span>
                 <ul class="dropdown-menu">
                     <li><a href="user-edit.html">个人资料</a></li>
-                    <li><a href="#">退出登录</a></li>
+                    <li><a href="/admin/laout">退出登录</a></li>
                 </ul>
             </div>
         </div>

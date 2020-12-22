@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 //引入body-parser模块 用来处理post请求参数
 const bodyPaser = require('body-parser');
+//导入express-session模块
+const session = require('express-session');
 //创建网站服务器
 const app = express();
 //数据库连接
@@ -11,6 +13,7 @@ require('./model/connect');
 //处理post请求参数
 app.use(bodyPaser.urlencoded({extended:false}))
 
+app.use(session({secret:'secret key'}));
 // require('./model/user');
 
 //告诉express框架模板所在位置
@@ -26,11 +29,14 @@ app.use(express.static(path.join(__dirname,'public')));
 
 const home = require('./route/home');
 const admin = require('./route/admin');
+const { nextTick } = require('process');
+
+//拦截请求 判断用户登录状态
+app.use('/admin',require('./middleware/loginGuard'));
 
 //为路由匹配请求路径，使用use拦截请求,接收/home请求后连接home路由
 app.use('/home',home);
-
-app.use('/admin',admin)
+app.use('/admin',admin);
 
 
 //监听端口
