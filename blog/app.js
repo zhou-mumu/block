@@ -13,7 +13,10 @@ require('./model/connect');
 //处理post请求参数
 app.use(bodyPaser.urlencoded({extended:false}))
 
-app.use(session({secret:'secret key'}));
+app.use(session({
+    resave:false,
+    saveUninitialized: true,
+    secret:'secret key'}));
 // require('./model/user');
 
 //告诉express框架模板所在位置
@@ -38,6 +41,13 @@ app.use('/admin',require('./middleware/loginGuard'));
 app.use('/home',home);
 app.use('/admin',admin);
 
+//错误处理中间件
+app.use((err, req, res, next) => {
+    //将字符串对象转换为对象类型
+    //JSON.parse()
+    const result = JSON.parse(err);
+	res.redirect(`${result.path}?message=${result.message}`);
+})
 
 //监听端口
 app.listen(80);
