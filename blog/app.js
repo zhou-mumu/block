@@ -46,7 +46,13 @@ app.use((err, req, res, next) => {
     //将字符串对象转换为对象类型
     //JSON.parse()
     const result = JSON.parse(err);
-	res.redirect(`${result.path}?message=${result.message}`);
+    let params = [];
+    for (let attr in result) {
+        if (attr != 'path') {
+          params.push(attr + '=' + result[attr]);
+        }
+    }
+    res.redirect(`${result.path}?${params.join('&')}`);
 })
 
 //监听端口
