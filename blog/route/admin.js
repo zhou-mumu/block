@@ -23,5 +23,8 @@ admin.get('/user-edit',require('./admin/user-edit'))
 admin.post('/user-edit',require('./admin/user-edit-fn'));
 
 admin.post('/user-modify',require('./admin/user-modify'));
+
+//删除用户功能路由
+admin.get('/delete',require('./admin/user-delete'));
 //将路由对象作为模块成员进行导出
 module.exports = admin;

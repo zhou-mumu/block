@@ -8,7 +8,17 @@ module.exports = async (req,res,next) => {
     let user = await User.findOne({_id:id})
     
     if(req.body.password == user.password) {
-        res.send('密码正确');
+        //res.send('密码正确');
+        //将用户信息更新到数据库中
+        await User.updateOne({_id:id}, {
+            username: req.body.username,
+            email: req.body.email,
+            role: req.body.role,
+            state: req.body.state
+        });
+
+        //将页面重定向到用户列表页面
+        res.redirect('/admin/user');
     }else {
         //密码对比失败
         let obj = {path: '/admin/user-edit',message: '密码比对失败，不能进行用户信息的修改',id:id};
