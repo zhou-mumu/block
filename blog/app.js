@@ -52,7 +52,6 @@ if (process.env.NODE_ENV == 'development') {
     //当前是生产环境
     console.log('当前是生产环境');
 }
-console.log();
 
 
 const home = require('./route/home');
