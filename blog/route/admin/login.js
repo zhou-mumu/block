@@ -17,9 +17,18 @@ const login = async (req,res) => {
             //将用户名放到请求列表中
             req.session.username = user.username;
             // res.send('ok');
+            //将用户角色存储在session对象中
+            req.session.role = user.role;
             req.app.locals.userInfo = user;
-            //重定向到用户列表页面
-            res.redirect('/admin/user');
+            //对用户的角色进行判断
+            if (user.role == 'admin') {
+                //重定向到用户列表页面
+                res.redirect('/admin/user');
+            }else {
+                //重定向到博客首页
+                res.redirect('/home/');
+            }
+            
         }else {
             res.status(400).send('<h4>邮件地址或者密码错误</h4>');
         }
